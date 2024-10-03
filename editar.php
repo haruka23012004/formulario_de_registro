@@ -120,7 +120,7 @@ mysqli_close($conn);
                         </div>
 
                         <div class="mb-3">
-                            <label for="observacion" class="form-label">Observación <i class="fas fa-sticky-note"></i></label>
+                            <label for="observacion" class="form-label">Observaciónes <i class="fas fa-sticky-note"></i></label>
                             <textarea class="form-control" id="observacion" name="observacion" rows="3" required><?php echo $row['observacion']; ?></textarea>
                         </div>
 
