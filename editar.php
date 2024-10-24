@@ -2,6 +2,9 @@
 
 include 'conexion.php';
 
+
+$mensaje = '';
+
 // Verificar si se ha enviado un ID por GET
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -36,8 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt = mysqli_prepare($conn, $sql)) {
             mysqli_stmt_bind_param($stmt, "sssi", $nombre_completo, $direccion, $observacion, $id);
             if (mysqli_stmt_execute($stmt)) {
-                header("Location: index.php");
-                exit();
+                $mensaje = "Registro editado correctamente";
+                
+                echo "<script>
+                        alert('$mensaje');
+                        window.location.href='index.php';
+                    </script>";
+
+                exit(); 
             } else {
                 echo "Error al actualizar los datos: " . mysqli_error($conn);
             }
