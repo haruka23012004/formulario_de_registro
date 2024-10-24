@@ -1,0 +1,76 @@
+body {
+    background-image: url("imagenes/pexels-jplenio-1103970.jpg");
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* fila para el contenedor principal */
+.row {
+    height: 100vh; 
+    margin: 0; 
+    background-image: url('imagenes/pexels-jplenio-1103970.jpg'); 
+    background-size: cover; 
+    background-position: center;
+}
+
+/* Card del contenedor principal */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+}
+
+/* Header de la tarjeta */
+.card-header {
+    background-color: rgba(0, 86, 179, 0.8);
+    color: white;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+}
+
+
+.form-label {
+    font-weight: bold;
+}
+
+
+.form-control {
+    border-radius: 5px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #565e64;
+    border-color: #4e555b;
+}
+
+@media screen and (max-width: 576px) {
+    .container {
+        padding: 10px;
+    }
+
+    .card {
+        box-shadow: none;
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+}
