@@ -1,13 +1,13 @@
 <?php
-// Incluir el archivo de conexión a la base de datos
+
 include 'conexion.php';
 
 $mensaje = '';
 
-// Verificar si el método de solicitud es POST, lo que indica que se ha enviado el formulario
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Obtener los valores del formulario enviados mediante POST
+
     $nombre_completo = $_POST['nombre_completo'];
     $direccion = $_POST['direccion'];
     $observacion = $_POST['observacion'];
@@ -27,14 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Ejecutar la declaración preparada
             if (mysqli_stmt_execute($stmt)) {
 
-                $mensaje = "Registro ingresado correctamente.";
+                $mensaje = "Registro ingresado correctamente";
+                
+                echo "<script>
+                        alert('$mensaje');
+                        window.location.href='index.php';
+                    </script>";
 
-                // Puedes mostrar el mensaje antes de redirigir, por ejemplo:
-            
-                echo $mensaje;
-
-                // Si la inserción es exitosa, redirigir al usuario a la página index.php
-                header("Location: index.php");
                 exit(); // Detener la ejecución del script después de la redirección
             } else {
                 // Si hay un error al ejecutar la declaración, mostrar un mensaje de error
