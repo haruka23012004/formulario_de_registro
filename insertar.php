@@ -1,54 +1,49 @@
 <?php
-
+// Incluir el archivo de conexión a la base de datos
 include 'conexion.php';
 
-// Inicializar
-$mensaje = '';
-$error = '';
 
+// Verificar si el método de solicitud es POST, lo que indica que se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    
+    // Obtener los valores del formulario enviados mediante POST
     $nombre_completo = $_POST['nombre_completo'];
     $direccion = $_POST['direccion'];
     $observacion = $_POST['observacion'];
 
-    
+    // Verificar que todos los campos estén completos, es decir, que no estén vacíos
     if (!empty($nombre_completo) && !empty($direccion) && !empty($observacion)) {
 
-        // Verificar si el registro ya existe
-        $sql_check = "SELECT * FROM tabla WHERE nombre_completo = ? AND direccion = ? AND observacion = ?";
-        if ($stmt_check = mysqli_prepare($conn, $sql_check)) {
-            mysqli_stmt_bind_param($stmt_check, "sss", $nombre_completo, $direccion, $observacion);
-            mysqli_stmt_execute($stmt_check);
-            $result_check = mysqli_stmt_get_result($stmt_check);
+        // Preparar la consulta SQL para insertar los datos en la tabla
+        $sql = "INSERT INTO tabla (nombre_completo, direccion, observacion) VALUES (?, ?, ?)";
 
-            // mensaje de error
-            if (mysqli_num_rows($result_check) > 0) {
-                $error = "El registro ya existe";
+        // Preparar la sentencia SQL utilizando la conexión a la base de datos
+        if ($stmt = mysqli_prepare($conn, $sql)) {
+
+            // Vincular los parámetros a la declaración preparada usando "sss" para indicar que son strings (texto)
+            mysqli_stmt_bind_param($stmt, "sss", $nombre_completo, $direccion, $observacion);
+
+            // Ejecutar la declaración preparada
+            if (mysqli_stmt_execute($stmt)) {
+                // Si la inserción es exitosa, redirigir al usuario a la página index.php
+                header("Location: index.php");
+                exit(); // Detener la ejecución del script después de la redirección
             } else {
-                // Si no existe insertar los datos
-                $sql = "INSERT INTO tabla (nombre_completo, direccion, observacion) VALUES (?, ?, ?)";
-                if ($stmt = mysqli_prepare($conn, $sql)) {
-                    mysqli_stmt_bind_param($stmt, "sss", $nombre_completo, $direccion, $observacion);
-                    if (mysqli_stmt_execute($stmt)) {
-
-                        // Redirigir al index.php 
-                        header("Location: index.php");
-                        exit(); // Detener la ejecución del script 
-                    } else {
-                        $error = "Error al insertar los datos: " . mysqli_error($conn);
-                    }
-                    mysqli_stmt_close($stmt);
-                }
+                // Si hay un error al ejecutar la declaración, mostrar un mensaje de error
+                echo "Error al insertar los datos: " . mysqli_error($conn);
             }
-            mysqli_stmt_close($stmt_check);
+
+            // Cerrar la declaración preparada para liberar los recursos
+            mysqli_stmt_close($stmt);
         } else {
-            $error = "Error al verificar los datos: " . mysqli_error($conn);
+            // Si hay un error al preparar la declaración, mostrar un mensaje de error
+            echo "Error al preparar la declaración: " . mysqli_error($conn);
         }
     } else {
-        $error = "Por favor, completa todos los campos.";
+        // Si algún campo está vacío, mostrar un mensaje de advertencia
+        echo "Por favor, completa todos los campos.";
     }
 }
 
+// Cerrar la conexión a la base de datos al finalizar
 mysqli_close($conn);
