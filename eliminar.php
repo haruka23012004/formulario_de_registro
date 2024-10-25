@@ -2,6 +2,9 @@
 // Incluir el archivo de conexión a la base de datos
 include 'conexion.php';
 
+$mensaje = '';
+
+
 // Verificar si se ha enviado un ID por GET
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -12,7 +15,12 @@ if (isset($_GET['id'])) {
         mysqli_stmt_bind_param($stmt, "i", $id);
 
         if (mysqli_stmt_execute($stmt)) {
-            header("Location: index.php");
+            $mensaje = "Registro eliminado correctamente";
+                
+                echo "<script>
+                        alert('$mensaje');
+                        window.location.href='index.php';
+                    </script>";
             exit();
         } else {
             echo "Error al eliminar el registro: " . mysqli_error($conn);
