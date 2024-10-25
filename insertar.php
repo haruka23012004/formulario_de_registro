@@ -47,8 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error al preparar la declaración: " . mysqli_error($conn);
         }
     } else {
-        // Si algún campo está vacío, mostrar un mensaje de advertencia
-        echo "Por favor, completa todos los campos.";
+        echo "<script>
+                        alert('por favor, completa los campos, los datos ingresados son incongruentes');
+                        window.location.href='index.php';
+                    </script>";
+                    exit();
     }
 }
 
